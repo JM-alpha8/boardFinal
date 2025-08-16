@@ -14,7 +14,7 @@ public class Article {
     @Column(nullable = false, length = 200)
     private String title;
 
-    @Lob @Column(nullable = false)
+    @Column(columnDefinition = "TEXT", nullable = false)
     private String content;
 
     public void update(String title, String content) {

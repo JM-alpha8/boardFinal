@@ -24,7 +24,7 @@ public class SecurityConfig {
     SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/", "/articles", "/articles/**", "/login", "/join", "/css/**", "/js/**", "/h2-console/**").permitAll()
+                        .requestMatchers("/", "/articles", "/articles/**", "/login", "/join", "/css/**", "/js/**").permitAll()
                         .requestMatchers("/api/**").authenticated() // CUD 보호
                         .anyRequest().permitAll()
                 )
@@ -45,12 +45,9 @@ public class SecurityConfig {
                                 .oidcUserService(customOidcUserService)
                         )
                 )
-                .headers(headers -> headers
-                        .frameOptions(frame -> frame.sameOrigin()) // 프레임 허용(같은 오리진)
-                )
+
                 .csrf(csrf -> csrf
                         .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
-                        .ignoringRequestMatchers(PathRequest.toH2Console())
                 );
         return http.build();
     }
